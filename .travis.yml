@@ -1,0 +1,16 @@
+sudo: true
+dist: node:10-alpine
+
+jobs: 
+	include:
+		- stage: build docker image
+		  script: docker build -t webpage-test .
+		- stage: test
+		  script: docker run -d $DOCKER_USERNAME/webpage-test $API_KEY $URL $USERNAME $PASS
+		  - script: docker run -d $DOCKER_USERNAME/webpage-test $API_KEY $URL $USERNAME $PASS
+		- stage: push image
+		  script:
+		  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+		  - docker tag webpage-test $DOCKER_USERNAME/webpage-test
+		  - docker push $DOCKER_USERNAME/webpage-test
+
