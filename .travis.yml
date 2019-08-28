@@ -21,13 +21,14 @@ jobs:
     include:
       - stage: install
         script:
+        - chmod +x d_script.sh
         - docker build -t ${IMAGE_NAME} .
         - chmod +x script.sh
+        - docker images
+        - docker tag $IMAGE_NAME $DOCKER_USERNAME/${IMAGE_NAME}
       - stage: before deploy
         script:
         - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-        - docker images
-        - docker tag $IMAGE_NAME $DOCKER_USERNAME/${IMAGE_NAME}
       - stage: test
         script:
         - ./script.sh $API_KEY $URL $USERNAME $PASS
