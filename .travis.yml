@@ -25,4 +25,4 @@ jobs:
         - docker build -t ${IMAGE_NAME} .
         - chmod +x script.sh
         - docker images
-        - ./script.sh $API_KEY $URL $USERNAME $PASS
+        - ./script.sh ${IMAGE_NAME} $API_KEY $URL $USERNAME $PASS
