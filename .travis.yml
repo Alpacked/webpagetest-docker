@@ -25,4 +25,4 @@ deploy:
 	provider: script
 	script: docker push "${IMAGE_NAME}:latest"
 	on:
-		condition: ./script.sh
+		condition: ./script.sh $API_KEY $URL $USERNAME $PASS
