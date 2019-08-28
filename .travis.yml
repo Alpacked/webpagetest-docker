@@ -26,8 +26,12 @@ before_deploy:
     - docker tag $IMAGE_NAME $DOCKER_USERNAME/${IMAGE_NAME}
 
 script:
-    - ./script.sh ${IMAGE_NAME} $API_KEY $URL $USERNAME $PASS
+    - fail=$(./script.sh ${IMAGE_NAME} $API_KEY $URL $USERNAME $PASS)
+    - if [ $fail -eq 0 ] && exit 0 || exit 1
 
 deploy:
     provider: script
     script: docker push $DOCKER_USERNAME/${IMAGE_NAME}
+    on:
+        branch: feature/webpagetest-docker
+
