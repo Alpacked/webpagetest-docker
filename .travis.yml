@@ -19,22 +19,18 @@ branches:
 
 jobs:
     include:
-        
-    - stage: install
+      - stage: install
         script:
         - docker build -t ${IMAGE_NAME} .
         - chmod +x script.sh
-
-    - stage: before before_deploy
+      - stage: before before_deploy
         script:
         - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
         - docker tag "$IMAGE_NAME" "${IMAGE_NAME}:latest"
         - ./script.sh $API_KEY $URL $USERNAME $PASS
-
-    - stage: test
+      - stage: test
         script:
         - ./script.sh $API_KEY $URL $USERNAME $PASS
-
-    - stage: deploy
+      - stage: deploy
         script:
         - docker push "${IMAGE_NAME}:latest"
