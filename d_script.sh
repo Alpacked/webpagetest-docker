@@ -24,5 +24,7 @@ if [ -d "$DIR" ]; then
 		echo "exit 1"; 
 		exit 1; 
 	fi
+else
+	exit 1;
 fi
 
