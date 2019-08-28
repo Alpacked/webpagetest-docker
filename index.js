@@ -20,10 +20,10 @@ const sleep = (milliseconds) => {
 }
 
 //function to set order
-async function run(username, pass) {
+/*async function run(username, pass) {
 	await web(username, pass);
 	await light(username, pass);
-}
+}*/
 
 //function to check website statusCode
 function check_code(url) {
@@ -39,7 +39,7 @@ function auth(url) {
 	if (check_code(url) === 200) {
 		let username = '';
 		let pass = '';
-		run(username, pass);		
+		web(username, pass);		
 	}
 	if (check_code(url) === 401) {
 		let username = process.argv[4];
@@ -50,7 +50,7 @@ function auth(url) {
 		var url_split = url.split('://');
 		var url_for_check = url_split[0] + '://' + username + ":" + pass + '@' + url_split[1];
 		if (check_code(url_for_check) === 200) {
-			run(username, pass);
+			web(username, pass);
 		}
 		if (check_code(url_for_check) === 401) {
 			return console.log(new Error("Incorrect username or password!"))
@@ -101,7 +101,6 @@ async function downloadVideo(url, path) {
 
 //function to call WebPageTest and lighthouse
 function web(username, pass) {
-	return new Promise(resolve => {
 		console.log('We are in main function.')
 		wpt.runTest(url, {
 			location: 'Dulles:Chrome',
@@ -113,13 +112,14 @@ function web(username, pass) {
 			authtype: 0,
 			login: username,
 			password: pass
-		}, function processTestResult(err, result) {
+		}, async function processTestResult(err, result) {
 			var path = cur_dir + '/artifacts';
 			if (!fs.existsSync(path)){
 				fs.mkdir(path, { recursive: true }, (err) => {
 				  if (err) throw err;
 				});
 			}
+			await light(username, pass);
 			var res = err || result;
 			var testId = res.data.id;
 			
@@ -141,14 +141,11 @@ function web(username, pass) {
 				queryWPT(data, 100, path)
 			});
 		})
-		resolve();
-	});
 }
 
-function light(username, pass) {
-	return new Promise(resolve => {
+async function light(username, pass) {
 		//function to launch chrom-launcher and lighthouse
-		async function launchChromeAndRunLighthouse(url, opts, config = null) {
+		function launchChromeAndRunLighthouse(url, opts, config = null) {
 		  return chromeLauncher.launch({chromeFlags: opts.chromeFlags}).then(chrome => {
 			opts.port = chrome.port;
 			return lighthouse(url, opts, config).then(results => {
@@ -180,7 +177,6 @@ function light(username, pass) {
 			write(JSON.stringify(results.artifacts.devtoolsLogs.defaultPass), 'json', cur_dir + '/artifacts/report-0.devtoolslog.json')
 			write(results.report, 'html', cur_dir + '/artifacts/report.html')
 		});
-	});
 }
 
 //call function to check url authorization and call main function

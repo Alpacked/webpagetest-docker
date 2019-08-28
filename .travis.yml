@@ -1,16 +1,28 @@
 sudo: true
+
+services:
+	- docker
+
 dist: node:10-alpine
 
-jobs: 
-	include:
-		- stage: build docker image
-		  script: docker build -t webpage-test .
-		- stage: test
-		  script: docker run -d $DOCKER_USERNAME/webpage-test $API_KEY $URL $USERNAME $PASS
-		  - script: docker run -d $DOCKER_USERNAME/webpage-test $API_KEY $URL $USERNAME $PASS
-		- stage: push image
-		  script:
-		  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-		  - docker tag webpage-test $DOCKER_USERNAME/webpage-test
-		  - docker push $DOCKER_USERNAME/webpage-test
+env:
+	global:
+	- IMAGE_NAME=webpage-test
 
+language: node_js
+node_js:
+	- "10.16.3"
+
+install:
+	- docker build -t ${IMAGE_NAME} .
+	- chmod +x script.sh
+
+before_deploy:
+	- docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+	- docker tag "$IMAGE_NAME" "${IMAGE_NAME}:latest"
+
+deploy:
+	provider: script
+	script: docker push "${IMAGE_NAME}:latest"
+	on:
+		condition: ./script.sh

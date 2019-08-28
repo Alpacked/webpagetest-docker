@@ -2,6 +2,8 @@ FROM node:10-alpine
 
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
+RUN apk add --no-cache bash
+
 RUN \
   echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
   && echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
