@@ -28,7 +28,8 @@ before_deploy:
 script:
     - fail=$(./script.sh ${IMAGE_NAME} $API_KEY $URL $USERNAME $PASS)
     - echo $fail
-    - if [ "$fail" -eq "0" ] && { exit 0; } || { exit 1; }
+    - ./script.sh ${IMAGE_NAME} $API_KEY $URL $USERNAME $PASS
+    - if [ "$$?" -eq "0" ] && { exit 0; } || { exit 1; }
 
 deploy:
     provider: script
