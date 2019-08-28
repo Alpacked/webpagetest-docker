@@ -29,7 +29,7 @@ script:
     - fail=$(./script.sh ${IMAGE_NAME} $API_KEY $URL $USERNAME $PASS)
     - echo $fail
     - ./script.sh ${IMAGE_NAME} $API_KEY $URL $USERNAME $PASS
-    - if [ "$?" -eq "0" ] ; then exit 0; else exit 1; fi
+    - if [ "$?" -eq "0" ] ; then echo "0"; else echo "1"; fi
 
 deploy:
     provider: script
