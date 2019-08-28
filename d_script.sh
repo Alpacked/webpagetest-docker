@@ -17,6 +17,12 @@ if [ -d "$DIR" ]; then
 	do 
 		[ -e ${DIR}$i ] && counter=$((counter+1))
 	done
-	if [ "$counter" -eq "${#FILES_IN_DIR[@]}" ];  then echo "exit 0"; exit 0; else echo "exit 1"; exit 1; fi
+	if [ "$counter" -eq "${#FILES_IN_DIR[@]}" ];  then 
+		echo "exit 0"; 
+		exit 0; 
+	else 
+		echo "exit 1"; 
+		exit 1; 
+	fi
 fi
 
