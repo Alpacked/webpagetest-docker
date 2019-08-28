@@ -26,6 +26,7 @@ jobs:
       - stage: before deploy
         script:
         - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+        - docker images
         - docker tag $IMAGE_NAME $DOCKER_USERNAME/${IMAGE_NAME}
       - stage: test
         script:
