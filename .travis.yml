@@ -17,12 +17,17 @@ branches:
     only:
     - feature/webpagetest-docker
 
-jobs:
-    include:
-      - stage: install
-        script:
-        - chmod +x d_script.sh
-        - docker build -t ${IMAGE_NAME} .
-        - chmod +x script.sh
-        - docker images
-        - ./script.sh ${IMAGE_NAME} $API_KEY $URL $USERNAME $PASS
+install:
+    - docker build -t ${IMAGE_NAME} .
+    - chmod +x script.sh
+
+before_deploy:
+    - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+    - docker tag $IMAGE_NAME $DOCKER_USERNAME/${IMAGE_NAME}
+
+script:
+    - ./script.sh ${IMAGE_NAME} $API_KEY $URL $USERNAME $PASS
+
+deploy:
+    provider: script
+    script: docker push $DOCKER_USERNAME/${IMAGE_NAME}
