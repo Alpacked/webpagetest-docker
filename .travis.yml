@@ -32,6 +32,3 @@ jobs:
       - stage: test
         script:
         - ./script.sh $API_KEY $URL $USERNAME $PASS
-      - stage: deploy
-        script:
-        - docker push $DOCKER_USERNAME/${IMAGE_NAME}
