@@ -175,9 +175,9 @@ async function light(username, pass) {
 		//function to run lighthouse
 	launchChromeAndRunLighthouse(url, opts).then( async function(results){
 		console.log('lighthouse ')
-		await write(JSON.stringify(results.artifacts.traces.defaultPass), 'json', cur_dir + '/artifacts/report-0.trace.json')
-		await write(JSON.stringify(results.artifacts.devtoolsLogs.defaultPass), 'json', cur_dir + '/artifacts/report-0.devtoolslog.json')
-		await write(results.report, 'html', cur_dir + '/artifacts/report.html')
+		write(JSON.stringify(results.artifacts.traces.defaultPass), 'json', cur_dir + '/artifacts/report-0.trace.json')
+		write(JSON.stringify(results.artifacts.devtoolsLogs.defaultPass), 'json', cur_dir + '/artifacts/report-0.devtoolslog.json')
+		write(results.report, 'html', cur_dir + '/artifacts/report.html')
 		await sleep(3000).then(() => { 
 			console.log("Wait before screenshot of report!")
 		})
@@ -198,8 +198,8 @@ async function report_screenshot() {
 	  height: 5800,
 	  deviceScaleFactor: 1,
 	});
-  await page.goto('file://' + cur_dir + 'artifacts/report.html');
-  await page.screenshot({path: cur_dir + 'artifacts/report_screenshot.png'});
+  await page.goto('file://' + cur_dir + '/artifacts/report.html');
+  await page.screenshot({path: cur_dir + '/artifacts/report_screenshot.png'});
 
   await browser.close();
 };
