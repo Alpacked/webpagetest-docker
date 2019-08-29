@@ -13,6 +13,6 @@
       "request": "latest",
       "sync-request": "latest",
       "webpagetest": "latest",
-      "webshot": "latest"
+      "puppeteer": "latest"
    }
 }
