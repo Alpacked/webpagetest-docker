@@ -1,32 +1,36 @@
 sudo: true
 
 services:
-	- docker
+    - docker
 
 dist: node:10-alpine
 
 env:
-	global:
-	- IMAGE_NAME=webpage-test
+    global:
+    - IMAGE_NAME=webpage-test
 
 language: node_js
 node_js:
-	- "10.16.3"
+    - "10.16.3"
 
 branches:
-	only:
-	- feature/webpagetest-docker
+    only:
+    - master
 
 install:
-	- docker build -t ${IMAGE_NAME} .
-	- chmod +x script.sh
+    - docker build -t ${IMAGE_NAME} .
+    - chmod +x script.sh
 
 before_deploy:
-	- docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-	- docker tag "$IMAGE_NAME" "${IMAGE_NAME}:latest"
+    - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+    - docker tag $IMAGE_NAME $DOCKER_USERNAME/${IMAGE_NAME}
+
+script:
+    - ./script.sh ${IMAGE_NAME} $API_KEY $URL $USERNAME $PASS
 
 deploy:
-	provider: script
-	script: docker push "${IMAGE_NAME}:latest"
-	on:
-		condition: ./script.sh $API_KEY $URL $USERNAME $PASS
+    provider: script
+    script: docker push $DOCKER_USERNAME/${IMAGE_NAME}
+    on:
+        branch: master
+

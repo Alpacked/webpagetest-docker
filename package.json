@@ -1,14 +1,16 @@
 {
- "name": "web-page-test",
- "description": "jenkins test app",
- "version": "1.0.0",
- "dependencies": {
-    "request": "latest",
-    "fs": "latest",
-    "webpagetest": "latest",
-    "child-process": "latest",
-    "chrome-launcher": "latest",
-    "lighthouse": "latest",
-    "sync-request": "latest"
- }
+   "name": "web-page-test",
+   "description": "jenkins test app",
+   "version": "1.0.0",
+   "dependencies": {
+      "child-process": "latest",
+      "chrome-launcher": "latest",
+      "fs": "latest",
+      "lighthouse": "^5.2.0",
+      "natives": "^1.1.6",
+      "request": "latest",
+      "sync-request": "latest",
+      "webpagetest": "latest",
+      "puppeteer": "latest"
+   }
 }
