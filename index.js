@@ -145,45 +145,45 @@ function web(username, pass) {
 		})
 }
 
-function light(username, pass) {
-		//function to launch chrom-launcher and lighthouse
-		function launchChromeAndRunLighthouse(url, opts, config = null) {
-		  return chromeLauncher.launch({chromeFlags: opts.chromeFlags}).then(chrome => {
-			opts.port = chrome.port;
-			return lighthouse(url, opts, config).then(results => {
-			  return chrome.kill().then(() => results)
-			});
-		  });
-		}
+async function light(username, pass) {
+	//function to launch chrom-launcher and lighthouse
+	async function launchChromeAndRunLighthouse(url, opts, config = null) {
+	return chromeLauncher.launch({chromeFlags: opts.chromeFlags}).then(chrome => {
+		opts.port = chrome.port;
+		return lighthouse(url, opts, config).then(results => {
+	     	return chrome.kill().then(() => results)
+		});
+	});
+	}
 
-		var opts;
-		if (username === '') {
-			opts = {
-			  	chromeFlags: ['--headless', '--no-sandbox'],
-			    output: 'html'
-			};
-		}
-		else {
-			var buffer = Buffer.from(username + ":" + pass).toString("base64")
-			opts = {
-			  	chromeFlags: ['--headless', '--no-sandbox'],
-			  	extraHeaders: {Authorization: 'Basic ' + buffer},
-			    output: 'html'
-			};
-		}
+	var opts;
+	if (username === '') {
+		opts = {
+		  	chromeFlags: ['--headless', '--no-sandbox'],
+		    output: 'html'
+		};
+	}
+	else {
+		var buffer = Buffer.from(username + ":" + pass).toString("base64")
+		opts = {
+		  	chromeFlags: ['--headless', '--no-sandbox'],
+		  	extraHeaders: {Authorization: 'Basic ' + buffer},
+		    output: 'html'
+		};
+	}
 
 		//function to run lighthouse
-		launchChromeAndRunLighthouse(url, opts).then(results => {
-			console.log('lighthouse ')
-			write(JSON.stringify(results.artifacts.traces.defaultPass), 'json', cur_dir + '/artifacts/report-0.trace.json')
-			write(JSON.stringify(results.artifacts.devtoolsLogs.defaultPass), 'json', cur_dir + '/artifacts/report-0.devtoolslog.json')
-			write(results.report, 'html', cur_dir + '/artifacts/report.html')
-			pup();
-		});
+	launchChromeAndRunLighthouse(url, opts).then(results => {
+		console.log('lighthouse ')
+		write(JSON.stringify(results.artifacts.traces.defaultPass), 'json', cur_dir + '/artifacts/report-0.trace.json')
+		write(JSON.stringify(results.artifacts.devtoolsLogs.defaultPass), 'json', cur_dir + '/artifacts/report-0.devtoolslog.json')
+		await write(results.report, 'html', cur_dir + '/artifacts/report.html')
+		report_screenshot();
+	});
 }
 
 //screenshot
-async function pup() {
+async function report_screenshot() {
   const browser = await puppeteer.launch({
 	  headless: true,
 	  executablePath: '/usr/bin/chromium-browser',
