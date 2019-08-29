@@ -8,7 +8,7 @@ PASS=$5
 
 CONTAINER=$(docker run -d $IMAGE sh -c 'while sleep 3600; do :; done')
 
-docker exec $CONTAINER /bin/sh -c "./d_script.sh $API_KEY $URL $USERNAME $PASS"
+docker exec $CONTAINER /bin/sh -c "./test_script.sh $API_KEY $URL $USERNAME $PASS"
 
 if [ $? -eq 0 ]; then 
 	docker stop $CONTAINER; 
