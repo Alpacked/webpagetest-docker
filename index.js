@@ -195,7 +195,7 @@ async function pup() {
 	  height: 5800,
 	  deviceScaleFactor: 1,
 	});
-  await page.goto('file:///' + cur_dir + 'artifacts/report.html');
+  await page.goto('file://' + cur_dir + 'artifacts/report.html');
   await page.screenshot({path: cur_dir + 'artifacts/report_screenshot.png'});
 
   await browser.close();
