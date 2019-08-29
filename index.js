@@ -47,11 +47,7 @@ async function auth(url) {
 		let pass = '';
 		await mkdir(path);
 		web(username, pass, path);
-		light(username, pass, path);
-		await sleep(3000).then(() => { 
-			console.log("Wait, video expected.")
-		})
-		await pup();		
+		light(username, pass, path);		
 	}
 	if (check_code(url) === 401) {
 		let username = process.argv[4];
@@ -65,10 +61,6 @@ async function auth(url) {
 		await mkdir(path);
 		web(username, pass, path);
 		light(username, pass, path);
-		await sleep(3000).then(() => { 
-			console.log("Wait, video expected.")
-		})
-		await pup();
 		}
 		if (check_code(url_for_check) === 401) {
 			return console.log(new Error("Incorrect username or password!"))
@@ -185,7 +177,11 @@ async function light(username, pass) {
 			console.log('lighthouse ')
 			write(JSON.stringify(results.artifacts.traces.defaultPass), 'json', cur_dir + '/artifacts/report-0.trace.json')
 			write(JSON.stringify(results.artifacts.devtoolsLogs.defaultPass), 'json', cur_dir + '/artifacts/report-0.devtoolslog.json')
-			write(results.report, 'html', cur_dir + '/artifacts/report.html')
+			await write(results.report, 'html', cur_dir + '/artifacts/report.html')
+					await sleep(3000).then(() => { 
+						console.log("Wait, video expected.")
+					})
+					await pup();
 		});
 }
 
