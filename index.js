@@ -110,7 +110,7 @@ async function downloadVideo(url, path) {
 }
 
 //function to call WebPageTest
-async function web(username, pass) {
+function web(username, pass) {
 		console.log('We are in main function.')
 		wpt.runTest(url, {
 			location: 'Dulles:Chrome',
@@ -145,9 +145,9 @@ async function web(username, pass) {
 		})
 }
 
-async function light(username, pass) {
+function light(username, pass) {
 		//function to launch chrom-launcher and lighthouse
-		async function launchChromeAndRunLighthouse(url, opts, config = null) {
+		function launchChromeAndRunLighthouse(url, opts, config = null) {
 		  return chromeLauncher.launch({chromeFlags: opts.chromeFlags}).then(chrome => {
 			opts.port = chrome.port;
 			return lighthouse(url, opts, config).then(results => {
@@ -177,11 +177,8 @@ async function light(username, pass) {
 			console.log('lighthouse ')
 			write(JSON.stringify(results.artifacts.traces.defaultPass), 'json', cur_dir + '/artifacts/report-0.trace.json')
 			write(JSON.stringify(results.artifacts.devtoolsLogs.defaultPass), 'json', cur_dir + '/artifacts/report-0.devtoolslog.json')
-			await write(results.report, 'html', cur_dir + '/artifacts/report.html')
-					await sleep(3000).then(() => { 
-						console.log("Wait, video expected.")
-					})
-					await pup();
+			write(results.report, 'html', cur_dir + '/artifacts/report.html')
+			pup();
 		});
 }
 
