@@ -47,11 +47,11 @@ async function auth(url) {
 		let pass = '';
 		await mkdir(path);
 		web(username, pass, path);
-		await light(username, pass, path);
+		light(username, pass, path);
 		await sleep(3000).then(() => { 
 			console.log("Wait, video expected.")
 		})
-		pup();		
+		await pup();		
 	}
 	if (check_code(url) === 401) {
 		let username = process.argv[4];
@@ -64,11 +64,11 @@ async function auth(url) {
 		if (check_code(url_for_check) === 200) {
 		await mkdir(path);
 		web(username, pass, path);
-		await light(username, pass, path);
+		light(username, pass, path);
 		await sleep(3000).then(() => { 
 			console.log("Wait, video expected.")
 		})
-		pup();
+		await pup();
 		}
 		if (check_code(url_for_check) === 401) {
 			return console.log(new Error("Incorrect username or password!"))
@@ -193,7 +193,7 @@ async function light(username, pass) {
 async function pup() {
   const browser = await puppeteer.launch({
 	  headless: true,
-	  executablePath: '/usr/bin/chromium-browser',
+	  executablePath: '/home/node/app/node_modules/puppeteer/.local-chromium/linux-674921',
 });
   const page = await browser.newPage();
 	  await page.setViewport({
