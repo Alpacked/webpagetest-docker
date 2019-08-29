@@ -122,7 +122,7 @@ function web(username, pass) {
 			authtype: 0,
 			login: username,
 			password: pass
-		}, async function processTestResult(err, result) {
+		}, function processTestResult(err, result) {
 			var res = err || result;
 			var testId = res.data.id;
 			//creating waterfall and screenshot
@@ -148,12 +148,12 @@ function web(username, pass) {
 async function light(username, pass) {
 	//function to launch chrom-launcher and lighthouse
 	async function launchChromeAndRunLighthouse(url, opts, config = null) {
-	return chromeLauncher.launch({chromeFlags: opts.chromeFlags}).then(chrome => {
-		opts.port = chrome.port;
-		return lighthouse(url, opts, config).then(results => {
-	     	return chrome.kill().then(() => results)
+		return chromeLauncher.launch({chromeFlags: opts.chromeFlags}).then(chrome => {
+			opts.port = chrome.port;
+			return lighthouse(url, opts, config).then(results => {
+	     		return chrome.kill().then(() => results)
+			});
 		});
-	});
 	}
 
 	var opts;
@@ -173,7 +173,7 @@ async function light(username, pass) {
 	}
 
 		//function to run lighthouse
-	launchChromeAndRunLighthouse(url, opts).then(results => {
+	launchChromeAndRunLighthouse(url, opts).then( async function(results){
 		console.log('lighthouse ')
 		write(JSON.stringify(results.artifacts.traces.defaultPass), 'json', cur_dir + '/artifacts/report-0.trace.json')
 		write(JSON.stringify(results.artifacts.devtoolsLogs.defaultPass), 'json', cur_dir + '/artifacts/report-0.devtoolslog.json')
