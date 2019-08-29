@@ -145,9 +145,9 @@ function web(username, pass) {
 		})
 }
 
-async function light(username, pass) {
+function light(username, pass) {
 		//function to launch chrom-launcher and lighthouse
-		function launchChromeAndRunLighthouse(url, opts, config = null) {
+		async function launchChromeAndRunLighthouse(url, opts, config = null) {
 		  return chromeLauncher.launch({chromeFlags: opts.chromeFlags}).then(chrome => {
 			opts.port = chrome.port;
 			return lighthouse(url, opts, config).then(results => {
