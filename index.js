@@ -177,8 +177,8 @@ async function light(username, pass) {
 		console.log('lighthouse ')
 		write(JSON.stringify(results.artifacts.traces.defaultPass), 'json', cur_dir + '/artifacts/report-0.trace.json')
 		write(JSON.stringify(results.artifacts.devtoolsLogs.defaultPass), 'json', cur_dir + '/artifacts/report-0.devtoolslog.json')
-		await write(results.report, 'html', cur_dir + '/artifacts/report.html')
-		report_screenshot();
+		write(results.report, 'html', cur_dir + '/artifacts/report.html')
+		await report_screenshot();
 	});
 }
 
