@@ -205,4 +205,4 @@ async function report_screenshot() {
 };
 
 //call function to check url authorization and call main function
-auth(url);
+authorization(url);
