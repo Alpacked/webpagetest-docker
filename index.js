@@ -47,7 +47,8 @@ async function auth(url) {
 		let pass = '';
 		await mkdir(path);
 		web(username, pass, path);
-		light(username, pass, path);		
+		light(username, pass, path);
+		await pup();		
 	}
 	if (check_code(url) === 401) {
 		let username = process.argv[4];
@@ -61,6 +62,7 @@ async function auth(url) {
 		await mkdir(path);
 		web(username, pass, path);
 		light(username, pass, path);
+		await pup();
 		}
 		if (check_code(url_for_check) === 401) {
 			return console.log(new Error("Incorrect username or password!"))
@@ -178,7 +180,6 @@ function light(username, pass) {
 			write(JSON.stringify(results.artifacts.traces.defaultPass), 'json', cur_dir + '/artifacts/report-0.trace.json')
 			write(JSON.stringify(results.artifacts.devtoolsLogs.defaultPass), 'json', cur_dir + '/artifacts/report-0.devtoolslog.json')
 			write(results.report, 'html', cur_dir + '/artifacts/report.html')
-			await pup();
 		});
 }
 
