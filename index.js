@@ -46,8 +46,8 @@ async function auth(url) {
 		let username = '';
 		let pass = '';
 		await mkdir(path);
-		web(username, pass, path);
-		light(username, pass, path);
+		await web(username, pass, path);
+		await light(username, pass, path);
 		await pup();		
 	}
 	if (check_code(url) === 401) {
@@ -60,8 +60,8 @@ async function auth(url) {
 		var url_for_check = url_split[0] + '://' + username + ":" + pass + '@' + url_split[1];
 		if (check_code(url_for_check) === 200) {
 		await mkdir(path);
-		web(username, pass, path);
-		light(username, pass, path);
+		await web(username, pass, path);
+		await light(username, pass, path);
 		await pup();
 		}
 		if (check_code(url_for_check) === 401) {
@@ -112,7 +112,7 @@ async function downloadVideo(url, path) {
 }
 
 //function to call WebPageTest
-function web(username, pass) {
+async function web(username, pass) {
 		console.log('We are in main function.')
 		wpt.runTest(url, {
 			location: 'Dulles:Chrome',
@@ -147,7 +147,7 @@ function web(username, pass) {
 		})
 }
 
-function light(username, pass) {
+async function light(username, pass) {
 		//function to launch chrom-launcher and lighthouse
 		async function launchChromeAndRunLighthouse(url, opts, config = null) {
 		  return chromeLauncher.launch({chromeFlags: opts.chromeFlags}).then(chrome => {
