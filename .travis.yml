@@ -15,7 +15,7 @@ node_js:
 
 branches:
     only:
-    - feature/webpagetest-docker
+    - master
 
 install:
     - docker build -t ${IMAGE_NAME} .
@@ -32,5 +32,5 @@ deploy:
     provider: script
     script: docker push $DOCKER_USERNAME/${IMAGE_NAME}
     on:
-        branch: feature/webpagetest-docker
+        branch: master
 
