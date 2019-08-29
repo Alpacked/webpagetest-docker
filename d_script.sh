@@ -9,7 +9,7 @@ node index.js $API_KEY $URL $USERNAME $PASSWORD
 
 counter=0
 DIR=/home/node/app/artifacts/
-FILES_IN_DIR=("report-0.trace.json" "report-0.devtoolslog.json" "report.html" "screenshot.jpg" "waterfall.png" "video.mp4")
+FILES_IN_DIR=("report-0.trace.json" "report-0.devtoolslog.json" "report.html" "screenshot.jpg" "waterfall.png" "video.mp4" "report_screenshot.png")
 ls -la $DIR
 
 if [ -d "$DIR" ]; then

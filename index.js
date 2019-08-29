@@ -41,13 +41,13 @@ function check_code(url) {
 }
 
 //function to check if website need authorization
-async function auth(url) {
+async function authorization(url) {
 	if (check_code(url) === 200) {
 		let username = '';
 		let pass = '';
 		await mkdir(path);
-		web(username, pass, path);
-		light(username, pass, path);		
+		WPT(username, pass, path);
+		LightHouse(username, pass, path);		
 	}
 	if (check_code(url) === 401) {
 		let username = process.argv[4];
@@ -59,8 +59,8 @@ async function auth(url) {
 		var url_for_check = url_split[0] + '://' + username + ":" + pass + '@' + url_split[1];
 		if (check_code(url_for_check) === 200) {
 		await mkdir(path);
-		web(username, pass, path);
-		light(username, pass, path);
+		WPT(username, pass, path);
+		LightHouse(username, pass, path);
 		}
 		if (check_code(url_for_check) === 401) {
 			return console.log(new Error("Incorrect username or password!"))
@@ -110,7 +110,7 @@ async function downloadVideo(url, path) {
 }
 
 //function to call WebPageTest
-function web(username, pass) {
+function WPT(username, pass) {
 		console.log('We are in main function.')
 		wpt.runTest(url, {
 			location: 'Dulles:Chrome',
@@ -145,7 +145,7 @@ function web(username, pass) {
 		})
 }
 
-async function light(username, pass) {
+async function LightHouse(username, pass) {
 	//function to launch chrom-launcher and lighthouse
 	async function launchChromeAndRunLighthouse(url, opts, config = null) {
 		return chromeLauncher.launch({chromeFlags: opts.chromeFlags}).then(chrome => {
