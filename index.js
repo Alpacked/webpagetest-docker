@@ -103,8 +103,8 @@ async function downloadVideo(url, path) {
 	var url_to_download = `https://www.webpagetest.org/video/download.php?id=${url}`
 	const video_file = fs.createWriteStream(path + '/video.mp4');
 	await request(url_to_download, (error, result) => {
-			if (error) {
-				console.log(error)
+		if (error) {
+			console.log(error)
 	}})
 	.pipe(video_file)
 }
@@ -175,10 +175,13 @@ async function light(username, pass) {
 		//function to run lighthouse
 	launchChromeAndRunLighthouse(url, opts).then( async function(results){
 		console.log('lighthouse ')
-		write(JSON.stringify(results.artifacts.traces.defaultPass), 'json', cur_dir + '/artifacts/report-0.trace.json')
-		write(JSON.stringify(results.artifacts.devtoolsLogs.defaultPass), 'json', cur_dir + '/artifacts/report-0.devtoolslog.json')
-		write(results.report, 'html', cur_dir + '/artifacts/report.html')
-		await report_screenshot();
+		await write(JSON.stringify(results.artifacts.traces.defaultPass), 'json', cur_dir + '/artifacts/report-0.trace.json')
+		await write(JSON.stringify(results.artifacts.devtoolsLogs.defaultPass), 'json', cur_dir + '/artifacts/report-0.devtoolslog.json')
+		await write(results.report, 'html', cur_dir + '/artifacts/report.html')
+		await sleep(3000).then(() => { 
+			console.log("Wait before screenshot of report!")
+		})
+		report_screenshot();
 	});
 }
 
