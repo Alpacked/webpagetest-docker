@@ -193,7 +193,8 @@ async function light(username, pass) {
 async function pup() {
   const browser = await puppeteer.launch({
 	  headless: true,
-	  executablePath: '/home/node/app/node_modules/puppeteer/.local-chromium/linux-674921',
+	  executablePath: '/usr/bin/chromium-browser',
+	  args: ['--no-sandbox'],
 });
   const page = await browser.newPage();
 	  await page.setViewport({
