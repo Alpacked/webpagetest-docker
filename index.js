@@ -145,7 +145,7 @@ function web(username, pass) {
 		})
 }
 
-function light(username, pass) {
+async function light(username, pass) {
 		//function to launch chrom-launcher and lighthouse
 		function launchChromeAndRunLighthouse(url, opts, config = null) {
 		  return chromeLauncher.launch({chromeFlags: opts.chromeFlags}).then(chrome => {
@@ -178,7 +178,7 @@ function light(username, pass) {
 			write(JSON.stringify(results.artifacts.traces.defaultPass), 'json', cur_dir + '/artifacts/report-0.trace.json')
 			write(JSON.stringify(results.artifacts.devtoolsLogs.defaultPass), 'json', cur_dir + '/artifacts/report-0.devtoolslog.json')
 			write(results.report, 'html', cur_dir + '/artifacts/report.html')
-			pup();
+			await pup();
 		});
 }
 
