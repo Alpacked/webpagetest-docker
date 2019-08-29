@@ -46,8 +46,11 @@ async function auth(url) {
 		let username = '';
 		let pass = '';
 		await mkdir(path);
-		await web(username, pass, path);
-		await light(username, pass, path);
+		web(username, pass, path);
+		light(username, pass, path);
+		await sleep(3000).then(() => { 
+			console.log("Wait, video expected.")
+		})
 		await pup();		
 	}
 	if (check_code(url) === 401) {
@@ -60,8 +63,11 @@ async function auth(url) {
 		var url_for_check = url_split[0] + '://' + username + ":" + pass + '@' + url_split[1];
 		if (check_code(url_for_check) === 200) {
 		await mkdir(path);
-		await web(username, pass, path);
-		await light(username, pass, path);
+		web(username, pass, path);
+		light(username, pass, path);
+		await sleep(3000).then(() => { 
+			console.log("Wait, video expected.")
+		})
 		await pup();
 		}
 		if (check_code(url_for_check) === 401) {
